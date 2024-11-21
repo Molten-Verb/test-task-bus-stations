@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('stations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->unsignedBigInteger('route_id')->nullable();
             $table->timestamps();
 
             $table->foreign('route_id')->references('id')->on('routes');

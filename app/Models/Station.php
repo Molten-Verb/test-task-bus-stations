@@ -17,6 +17,7 @@ class Station extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'route_id',
         'name',
     ];
 

@@ -15,9 +15,12 @@ class Bus extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'number',
+        'bus_number',
         'route_id',
     ];
 
-
+    public function route(): BelongsTo
+    {
+        return $this->belongsTo(Route::class);
+    }
 }

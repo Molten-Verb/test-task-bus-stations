@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('buses', function (Blueprint $table) {
             $table->id();
-            $table->integer('number')->nullable();
+            $table->integer('bus_number')->nullable();
+            $table->unsignedBigInteger('route_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('route_id')->references('id')->on('routes');
         });
     }
 

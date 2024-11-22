@@ -10,11 +10,13 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class RouteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $routes = QueryBuilder::for(Route::class)
-            ->allowedFilters(['name']);
+            ->allowedFilters(['name'])
+            ->with('stations', 'buses');
 
         return RouteResource::collection($routes->jsonPaginate());
     }
 }
+

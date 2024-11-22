@@ -15,7 +15,17 @@ class RouteResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->name,
+            'route' => [
+                'name' => $this->name,
+
+                'stations' => $this->stations->map(function ($station) {
+                    return $station->name;
+                }),
+
+                'buses' => $this->buses->map(function ($bus) {
+                    return $bus->bus_number;
+                }),
+            ],
         ];
     }
 }

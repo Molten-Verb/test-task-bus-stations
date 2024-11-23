@@ -19,4 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/find-bus', [RouteController::class, 'index']);
+Route::prefix('routes')
+->name('routes.')
+->controller(RouteController::class)
+->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/find-bus', 'findBus')->name('findBus');
+});

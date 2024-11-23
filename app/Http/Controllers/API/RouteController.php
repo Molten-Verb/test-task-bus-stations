@@ -32,19 +32,16 @@ class RouteController extends Controller
         ];
 
         $routeId = Station::where('name', $from)->value('route_id');
-        $route = Route::find($routeId);
+        $route = Route::with(['stations', 'buses'])->find($routeId);
 
-        $stations = $route->stations();
-        $firstStation = $route->stations()->orderBy('position', 'asc')->first();
-        $lastStation = $route->stations()->orderBy('position', 'desc')->first();
+        $firstStation = $route->stations->sortBy('position')->first();
+        $lastStation = $route->stations->sortByDesc('position')->first();
 
         $result->firstStation = $firstStation->name;
         $result->lastStation = $lastStation->name;
 
-        $buses = $route->buses();
-
-        $firstBus = $route->buses()->orderBy('id', 'asc')->first();
-        $lastBus = $route->buses()->orderBy('id', 'desc')->first();
+        $firstBus = $route->buses->sortBy('id')->first();
+        $lastBus = $route->buses->sortByDesc('id')->first();
 
         $result->firstBus = $firstBus->bus_number;
         $result->lastBus = $lastBus->bus_number;

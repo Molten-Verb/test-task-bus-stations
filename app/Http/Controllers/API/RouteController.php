@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\FindBusResource;
-use App\Http\Resources\RouteResource;
 use App\Models\Route;
 use App\Models\Station;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StationRequest;
+use App\Http\Resources\RouteResource;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\FindBusResource;
 
 class RouteController extends Controller
 {
@@ -21,7 +22,7 @@ class RouteController extends Controller
         return RouteResource::collection($routes->jsonPaginate());
     }
 
-    public function findBus(Request $request)
+    public function findBus(StationRequest $request)
     {
         $from = $request->query('from');
         $to = $request->query('to');

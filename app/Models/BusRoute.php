@@ -7,8 +7,9 @@ use App\Models\Station;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Route extends Model
+class BusRoute extends Model
 {
     use HasFactory;
 
@@ -21,9 +22,9 @@ class Route extends Model
         'name',
     ];
 
-    public function stations(): HasMany
+    public function stations(): BelongsToMany
     {
-        return $this->hasMany(Station::class);
+        return $this->belongsToMany(Station::class);
     }
 
     public function buses(): HasMany

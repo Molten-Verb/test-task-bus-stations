@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Route;
+use App\Models\BusRoute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Station extends Model
 {
@@ -18,12 +18,12 @@ class Station extends Model
      */
     protected $fillable = [
         'name',
-        'route_id',
+        'bus_route_id',
         'position',
     ];
 
-    public function route(): BelongsTo
+    public function route(): BelongsToMany
     {
-        return $this->belongsTo(Route::class);
+        return $this->belongsToMany(BusRoute::class);
     }
 }

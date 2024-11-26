@@ -19,7 +19,7 @@ class StationRequest extends FormRequest
     {
         return [
             'from' => ['required', Rule::exists('stations', 'name')],
-            'to' => ['required', Rule::exists('stations', 'name'), new SameRoute($this->from, $this->to)],
+            'to' => ['required', Rule::exists('stations', 'name'), new SameRoute($this->from)],
         ];
     }
 

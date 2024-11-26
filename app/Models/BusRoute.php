@@ -24,7 +24,7 @@ class BusRoute extends Model
 
     public function stations(): BelongsToMany
     {
-        return $this->belongsToMany(Station::class);
+        return $this->belongsToMany(Station::class, 'route_and_stations');
     }
 
     public function buses(): HasMany

@@ -16,21 +16,16 @@ class FindBusResource extends JsonResource
     {
         return
             [
-                'from' => $this->from,
-                'to' => $this->to,
-                    'buses' => [
-                        ["Автобус №{$this->firstBus} в сторону {$this->lastStation}"],
-                        ["Автобус №{$this->lastBus} в сторону {$this->firstStation}"],
-                    ],
-            ];
+            'from' => $this->from,
+            'to' => $this->to,
+            'buses' => [
+                ['route' => "Автобус №{$this->getFirstBus()} в сторону {$this->getFinalStation()}",
+                'next_arrivals' => $this->getArrivals()],
+            ],
+            [
+                ['route' => "Автобус №{$this->getLastBus()} в сторону {$this->getInitialStation()}",
+                'next_arrivals' => $this->getArrivals()],
+            ],
+        ];
     }
 }
-
-/* return [
-    'from' => $this->from,
-    'to' => $this->to,
-    'buses' => [
-        ['route' => "Автобус No11 в сторону ост. Попова"],
-        ['route' => "Автобус No21 в сторону ост.Ленина"],
-    ],
-]; */

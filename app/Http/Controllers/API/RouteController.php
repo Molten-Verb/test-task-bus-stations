@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Route;
 use App\Models\Station;
+use App\Models\BusRoute;
 use Illuminate\Http\Request;
+use App\Http\Services\Shedule;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StationRequest;
 use App\Http\Resources\RouteResource;
@@ -15,7 +16,7 @@ class RouteController extends Controller
 {
     public function index(Request $request)
     {
-        $routes = QueryBuilder::for(Route::class)
+        $routes = QueryBuilder::for(BusRoute::class)
             ->allowedFilters(['name'])
             ->with('stations', 'buses');
 
@@ -27,26 +28,8 @@ class RouteController extends Controller
         $from = $request->query('from');
         $to = $request->query('to');
 
-        $result = (object) [
-            'from' => $from,
-            'to' => $to,
-        ];
+        $shedule = new Shedule($from, $to);
 
-        $routeId = Station::where('name', $from)->value('route_id');
-        $route = Route::with(['stations', 'buses'])->find($routeId);
-
-        $firstStation = $route->stations->sortBy('position')->first();
-        $lastStation = $route->stations->sortByDesc('position')->first();
-
-        $result->firstStation = $firstStation->name;
-        $result->lastStation = $lastStation->name;
-
-        $firstBus = $route->buses->sortBy('id')->first();
-        $lastBus = $route->buses->sortByDesc('id')->first();
-
-        $result->firstBus = $firstBus->bus_number;
-        $result->lastBus = $lastBus->bus_number;
-
-        return new FindBusResource($result);
+        return new FindBusResource($shedule);
     }
 }

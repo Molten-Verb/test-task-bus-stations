@@ -18,12 +18,10 @@ class Station extends Model
      */
     protected $fillable = [
         'name',
-        'bus_route_id',
-        'position',
     ];
 
     public function route(): BelongsToMany
     {
-        return $this->belongsToMany(BusRoute::class);
+        return $this->belongsToMany(BusRoute::class, 'route_and_stations');
     }
 }

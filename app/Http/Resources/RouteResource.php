@@ -23,7 +23,7 @@ class RouteResource extends JsonResource
                 }),
 
                 'buses' => $this->buses->map(function ($bus) {
-                    return $bus->bus_number;
+                    return $bus->number;
                 }),
             ],
         ];

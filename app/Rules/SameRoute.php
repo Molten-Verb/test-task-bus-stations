@@ -3,18 +3,17 @@
 namespace App\Rules;
 
 use Closure;
-use App\Models\Station;
+use App\Http\Services\FindId;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class SameRoute implements ValidationRule
 {
-    protected $routeFirstStation;
+    protected $from;
     protected $routeSecondStation;
 
-    public function __construct($firstStation, $secondStation)
+    public function __construct($from)
     {
-        $this->routeFirstStation = Station::where('name', $firstStation)->value('route_id');
-        $this->routeSecondStation = Station::where('name', $secondStation)->value('route_id');
+        $this->from = $from;
     }
 
     /**
@@ -24,7 +23,11 @@ class SameRoute implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if ($this->routeFirstStation !== $this->routeSecondStation) {
+        $findId = new FindId;
+        $fromId = $findId->getRouteId($this->from);
+        $toId = $findId->getRouteId($value);
+
+        if ($fromId !== $toId) {
             $fail("Остановки относятся к разным маршрутам");
         }
     }

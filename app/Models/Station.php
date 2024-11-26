@@ -18,6 +18,8 @@ class Station extends Model
      */
     protected $fillable = [
         'name',
+        'bus_route_id',
+        'position',
     ];
 
     public function route(): BelongsToMany

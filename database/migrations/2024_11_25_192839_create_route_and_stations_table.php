@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stations', function (Blueprint $table) {
+        Schema::create('route_and_stations', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('bus_route_id')->constrained('bus_routes');
+            $table->foreignId('station_id')->constrained('stations');
+            $table->integer('position')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stations');
+        Schema::dropIfExists('route_and_stations');
     }
 };

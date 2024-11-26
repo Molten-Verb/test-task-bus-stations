@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Bus;
-use App\Models\Route;
+use App\Models\BusRoute;
 use App\Models\Station;
 use Illuminate\Database\Seeder;
 
@@ -15,46 +15,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $routes = [
-            ['name' => 'пл.Ленина-Технологический Институт'],
-            ['name' => 'Приморская-Елизаровская'],
-            ['name' => 'Парнас-Черная речка'],
-        ];
+        $busRoute1 = BusRoute::create(['name' => 'пл.Ленина-Технологический Институт']);
+        $busRoute2 = BusRoute::create(['name' => 'Приморская-Елизаровская']);
 
-        $stations = [
-            ['name' => 'пл.Ленина', 'route_id' => 1, 'position' => 1],
-            ['name' => 'Чернышевская', 'route_id' => 1, 'position' => 2],
-            ['name' => 'Достоевская', 'route_id' => 1, 'position' => 3],
-            ['name' => 'Владимирская', 'route_id' => 1, 'position' => 4],
-            ['name' => 'Пушкинская', 'route_id' => 1, 'position' => 5],
-            ['name' => 'Технологический Институт', 'route_id' => '1', 'position' => 6],
+        $station1 = Station::create(['name' => 'пл.Ленина']);
+        $station2 = Station::create(['name' => 'Чернышевская']);
+        $station3 = Station::create(['name' => 'Достоевская']);
+        $station4 = Station::create(['name' => 'Владимирская']);
+        $station5 = Station::create(['name' => 'Пушкинская']);
+        $station6 = Station::create(['name' => 'Технологический Институт']);
 
-            ['name' => 'Приморская', 'route_id' => 2, 'position' => 1],
-            ['name' => 'Василеостровская', 'route_id' => 2, 'position' => 2],
-            ['name' => 'Невский проспект', 'route_id' => 2, 'position' => 3],
-            ['name' => 'пл.Восстания', 'route_id' => 2, 'position' => 4],
-            ['name' => 'пл.Александра Невского', 'route_id' => '2', 'position' => 5],
-            ['name' => 'Елизаровская', 'route_id' => 2, 'position' => 6],
+        $busRoute1->stations()->attach($station1->id, ['position' => 1]);
+        $busRoute1->stations()->attach($station2->id, ['position' => 2]);
+        $busRoute1->stations()->attach($station3->id, ['position' => 3]);
+        $busRoute1->stations()->attach($station4->id, ['position' => 4]);
+        $busRoute1->stations()->attach($station5->id, ['position' => 5]);
+        $busRoute1->stations()->attach($station6->id, ['position' => 6]);
 
-            ['name' => 'Парнас', 'route_id' => 3, 'position' => 1],
-            ['name' => 'пр. Просвещения', 'route_id' => 3, 'position' => 2],
-            ['name' => 'Озерки', 'route_id' => 3, 'position' => 3],
-            ['name' => 'Удельная', 'route_id' => 3, 'position' => 4],
-            ['name' => 'Пионерская', 'route_id' => 3, 'position' => 5],
-            ['name' => 'Черная речка', 'route_id' => 3, 'position' => 6],
-        ];
+        $station7 = Station::create(['name' => 'Приморская']);
+        $station8 = Station::create(['name' => 'Василеостровская']);
+        $station9 = Station::create(['name' => 'Невский проспект']);
+        $station10 = Station::create(['name' => 'Гостинный двор']);
+        $station11 = Station::create(['name' => 'пл.Александра Невского']);
+        $station12 = Station::create(['name' => 'Елизаровская']);
 
-        $buses = [
-            ['bus_number' => 11, 'route_id' => 1],
-            ['bus_number' => 21, 'route_id' => 1],
-            ['bus_number' => 13, 'route_id' => 2],
-            ['bus_number' => 20, 'route_id' => 2],
-            ['bus_number' => 45, 'route_id' => 3],
-            ['bus_number' => 50, 'route_id' => 3],
-        ];
+        $busRoute2->stations()->attach($station7->id, ['position' => 1]);
+        $busRoute2->stations()->attach($station8->id, ['position' => 2]);
+        $busRoute2->stations()->attach($station9->id, ['position' => 3]);
+        $busRoute2->stations()->attach($station10->id, ['position' => 4]);
+        $busRoute2->stations()->attach($station11->id, ['position' => 5]);
+        $busRoute2->stations()->attach($station12->id, ['position' => 6]);
 
-        Route::insert($routes);
-        Station::insert($stations);
-        Bus::insert($buses);
+        $busRoute1->buses()->create(['number' => 11]);
+        $busRoute1->buses()->create(['number' => 21]);
+        $busRoute2->buses()->create(['number' => 13]);
+        $busRoute2->buses()->create(['number' => 20]);
     }
 }

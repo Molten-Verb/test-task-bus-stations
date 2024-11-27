@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('routes')
-->name('routes.')
+->name('api.routes.')
 ->controller(RouteController::class)
 ->group(function () {
     Route::get('/', 'index')->name('index');

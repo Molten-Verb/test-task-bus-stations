@@ -27,7 +27,7 @@ class Shedule
 
     public function getFromId(): int
     {
-        $findId = new FindId;
+        $findId = new FindId();
         $this->fromId = $findId->getStationId($this->from);
 
         return $this->fromId;
@@ -35,7 +35,7 @@ class Shedule
 
     public function getToId(): int
     {
-        $findId = new FindId;
+        $findId = new FindId();
         $this->ToId = $findId->getStationId($this->to);
 
         return $this->ToId;
@@ -43,7 +43,7 @@ class Shedule
 
     public function getBusRoute(): object
     {
-        $findId = new FindId;
+        $findId = new FindId();
         $routeId = $findId->getRouteId($this->from);
 
         $busRoute = BusRoute::with(['stations', 'buses'])->find($routeId);
@@ -91,7 +91,7 @@ class Shedule
 
     public function getArrivals(): array
     {
-        $timeService = new TimeService;
+        $timeService = new TimeService();
 
         return $timeService->getNextTimeArrivals();
     }

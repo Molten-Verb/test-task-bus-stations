@@ -5,8 +5,6 @@ namespace App\Http\Requests;
 use App\Rules\SameRoute;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StationRequest extends FormRequest
 {
@@ -19,26 +17,29 @@ class StationRequest extends FormRequest
     {
         return [
             'from' => ['required', Rule::exists('stations', 'name')],
-            'to' => ['required', Rule::exists('stations', 'name'), new SameRoute($this->from)],
+            'to' => ['required', Rule::exists('stations', 'name')],
         ];
     }
 
-    /**
-     * Обрабатывает ошибку валидации и возвращает ошибку в формате JSON.
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @return void
-     *
-     * @throws \Illuminate\Http\Exceptions\HttpResponseException
-     */
-    protected function failedValidation(Validator $validator)
+    public function messages(): array
     {
-        throw new HttpResponseException(
-            response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422)
-        );
+        return [
+            'required' => 'Поле :attribute должно быть заполнено',
+            'exists' => 'Данная остановка не найдена',
+        ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->has('from') || $validator->errors()->has('to')) {
+                return;
+            }
+
+            $sameRouteRule = new SameRoute($this->from);
+            $sameRouteRule->validate('to', $this->to, function ($message) use ($validator) {
+                $validator->errors()->add('to', $message);
+            });
+        });
+    }
 }

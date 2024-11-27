@@ -7,20 +7,13 @@ use App\Models\RouteAndStation;
 
 class FindId
 {
-    protected int $routeId;
-    protected int $stationId;
-
-    public function getRouteId(string $name): int
+    public function getRouteId(string $name): ?int
     {
-        $routeId = RouteAndStation::where('station_id', $this->getStationId($name))->value('bus_route_id');
-
-        return $this->routeId = $routeId;
+        return RouteAndStation::firstWhere('station_id', $this->getStationId($name))?->bus_route_id;
     }
 
-    public function getStationId(string $name): int
+    public function getStationId(string $name): ?int
     {
-        $stationId = Station::where('name', $name)->value('id');
-
-        return $this->stationId = $stationId;
+        return Station::firstWhere('name', $name)?->id;
     }
 }

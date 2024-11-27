@@ -23,7 +23,7 @@ class SameRoute implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $findId = new FindId;
+        $findId = new FindId();
         $fromId = $findId->getRouteId($this->from);
         $toId = $findId->getRouteId($value);
 

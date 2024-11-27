@@ -1,5 +1,9 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://github.com/user-attachments/assets/4689a578-1297-4143-9f6e-ac416c2f4953" width="400"></a></p>
 
+## О проекте
+
+laravel 10, PHP 8.3, MySQL
+
 ## О задании
 
 В данном тестовом задании реализованы следующие методы этого API:
